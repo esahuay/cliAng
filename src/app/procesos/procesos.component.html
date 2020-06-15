@@ -1,0 +1,113 @@
+<h2>Listado de procesos</h2>
+
+<hr>
+
+  <!--<li *ngFor="let p of LProcesos "> <strong> {{ p.processid }} </strong> - {{ p.nombre }}-->
+  	<h3>Tabulación total de procesos</h3>
+	<table align = center >
+		<tr>
+			<th>
+				Nombre
+			</th>
+			<th>
+				Detalle
+			</th>
+		</tr>
+		<tr>
+			<td>
+				Procesos en ejecución
+			</td>
+			<td>
+				{{ ejecucion }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Procesos suspendidos
+			</td>
+			<td>
+				{{ suspend }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Procesos detenidos
+			</td>
+			<td> 
+				{{ detenido }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Procesos muertos
+			</td>
+			<td> 
+				{{ muertos }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Otros procesos
+			</td>
+			<td> 
+				{{ otros }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Procesos zombie
+			</td>
+			<td> 
+				{{ zombies }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Procesos idle
+			</td>
+			<td> 
+				{{ idle }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Número total de procesos
+			</td>
+			<td>
+				{{ totalproc }}
+			</td>
+		</tr>
+	</table>
+	<br>
+	Numero total: {{ lptotal }}
+	<br>
+<hr>
+	<h3>Detalle de procesos</h3>
+
+  <!--<li *ngFor="let p of LProcesos "> <strong> {{ p.processid }} </strong> - {{ p.nombre }}-->
+  	<table align='center'>
+  		<tr>
+	  		<th>
+	  			PID
+	  		</th>
+	  		<th>
+	  			Nombre
+	  		</th>
+	  		<th>
+	  			Usuario
+	  		</th>
+	  		<th>
+	  			Estado
+	  		</th>
+	  		<th>
+	  			% RAM
+	  		</th>
+  		</tr>
+  		<tr *ngFor="let p of lista"> 
+  			<td> {{ p.Pid }} </td> 
+  			<td> {{ p.Nombre }} </td> 
+  			<td> {{ p.Uid }} </td>
+  			<td> {{ p.Estado }} </td>
+  			<td> <button (click)="borrarProceso(p.Pid)"> Eliminar </button></td>
+  		</tr>
+  	</table>
