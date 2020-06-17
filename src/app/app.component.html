@@ -1,19 +1,30 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Panel {{ title }}!
-  </h1>
-
-  <nav>
-  	<a [routerLink]="['/home']" [routerLinkActive]="['active']"> Home </a>
-  	&nbsp;
-  	<a [routerLink]="['/procesos']" [routerLinkActive]="['active']"> Procesos </a>
-  	&nbsp;
-  	<a [routerLink]="['/monitor-cpu']" [routerLinkActive]="['active']"> CPU </a>
-  	&nbsp;
-  	<a [routerLink]="['/monitor-ram']" [routerLinkActive]="['active']"> RAM </a>  	
-  </nav>
+  
+<header>
+  <ul>
+    <li>
+      <a [routerLink]="['/varbol']" [routerLinkActive]="['active']"> Arbol </a>  
+    </li>
+    <li>
+      <a [routerLink]="['/procesos']" [routerLinkActive]="['active']"> Procesos </a>  
+    </li>
+    <li id="logo"><a href="#"> SO1 </a></li>
+    <li>
+      <a [routerLink]="['/monitor-cpu']" [routerLinkActive]="['active']"> Monitor CPU </a>  
+    </li>
+    <li>
+      <a [routerLink]="['/monitor-ram']" [routerLinkActive]="['active']"> Monitor RAM </a>      
+    </li>
+  </ul>
+</header>
 
 <hr>
+<section id="content">
+  <router-outlet></router-outlet>
+</section>
 
-<router-outlet></router-outlet>
+<footer>
+  Curso Sistemas Operativos 1
+  2020  Junio
+</footer>

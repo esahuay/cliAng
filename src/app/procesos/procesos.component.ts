@@ -12,7 +12,7 @@ import { ReqprocesosService } from '../services/reqprocesos.services'
 })
 
 export class ProcesosComponent implements OnInit {
-
+  public titulo : string = "Tabla de procesos"
 	public LProcesos: Array<Procesoubuntu>;
   public lproc: any;
   public lista: any;
@@ -34,8 +34,6 @@ export class ProcesosComponent implements OnInit {
   ){ }
 
   ngOnInit() {
-//    this.LProcesos = this._procesoservice.getProcesos();
-//  	console.log(this.LProcesos);
   
       this._reqprocesosService.getProc().subscribe(
         result => {

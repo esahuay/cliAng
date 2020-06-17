@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+	public titulo: string;
+	public subtitulo: string;
+
+  constructor() { 
+  	this.titulo = "Proyecto 1 - Monitor";
+  	this.subtitulo = " Eliseo Sahuay - Tereza Salazar ";
+  }
 
   ngOnInit() {
   }

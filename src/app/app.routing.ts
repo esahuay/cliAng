@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { ProcesosComponent } from './procesos/procesos.component';
 import { MonitorRamComponent } from './monitor-ram/monitor-ram.component';
 import { MonitorCpuComponent } from './monitor-cpu/monitor-cpu.component';
+import { VarbolComponent } from './varbol/varbol.component';
 
 // Array de rutas
 const appRoutes: Routes = [
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
 	{path:'procesos', component: ProcesosComponent},
 	{path:'monitor-cpu', component: MonitorCpuComponent},
 	{path:'monitor-ram', component: MonitorRamComponent},
+	{path:'varbol', component: VarbolComponent},
 	{path: '**', component: HomeComponent}
 ];
 

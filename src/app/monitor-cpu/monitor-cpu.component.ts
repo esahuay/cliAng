@@ -8,41 +8,42 @@ import { ReqprocesosService } from '../services/reqprocesos.services'
   styleUrls: ['./monitor-cpu.component.css'],
   providers: [ReqprocesosService]
 })
-
 export class MonitorCpuComponent implements OnInit {
   public LineChart: Chart;
   public x : any;
-  public nint : number = 0;
+  public nint : number = -10;
+  public valAct : number = 0;
+  public titulo : string = "Monitor - CPU";
 
   public listlabels : number[]; 
   public listdatos : number[];
-  
-  
+    
 
   getHola(){
-	this.listlabels = [this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1];
-	this.listdatos = [9,7,3,5,2,10,15,16,19,3,1,9];
-	console.log(" =====+> Eliminando: " + this.listlabels  );
+  this.listlabels = [this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1];
+  this.listdatos = [0,0,0,0,0,0,0,0,0,0];
+  console.log(" =====+> Eliminando: " + this.listlabels  );
   }
 
   getHola2(){
-	console.log("esperando2");
-	this._reqprocesosService.getCpu().subscribe(
+  console.log("esperando2");
+  this._reqprocesosService.getCpu().subscribe(
         result => {
-          console.log(result);
+        this.valAct = result.User;
+          console.log(this.valAct);
         },
         error => {
-          console.log(<any>error);
+          console.log("======error====="+<any>error);
         }
     );
-	this.removeData(this.LineChart);
-	this.addData(this.LineChart);
+  this.removeData(this.LineChart);
+  this.addData(this.LineChart,this.valAct);
   }
 
-addData(chart) {
+addData(chart, data) {
     chart.data.labels.push(this.nint+=1);
     chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(30);
+        dataset.data.push(data/100000);
     });
     chart.update();
 }
@@ -56,69 +57,69 @@ removeData(chart) {
 }
 
 delay(ms: number) {
-	console.log("esperando");
+  console.log("esperando");
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
   constructor(private _reqprocesosService : ReqprocesosService) { }
 
   ngOnInit() {
-   	//LineChart
-   	this.getHola();
-  	this.LineChart = new Chart('lineChart', {
-  		type:	'line',
-  		data:	{
-  			labels:	this.listlabels,
-  			datasets:	[{
-  				label:	'Monitor-CPU',
-  				data:	this.listdatos,
-  				fill:	false,
-  				lineTension:	0.5,
-  				borderColor:	"red",
-  				borderWidth:	1
-  			}]
-  		},
-  		options: {
-  			title: {
-  				text: "Line Chart",
-  				display: true
-  			},
-  			scales: {
-	            xAxes: [{
-	                time: {
-	                    unit: 'second'
-	                },
-	                gridLines: {
-	                    display:true,
-	                    drawBorder: false
-	                },
-	                ticks: {
-	                    maxTicksLimit: 20
-	                }
-	            }],
-	            yAxes:[{
-	                ticks:{
-	                    maxTicksLimit: 10,
-	                    callback: function(value, index, values){
-	                        return value + " MB"
-	                    }
-	                }
-	            }],
-	        },
-	        legend : {
-	            display: false
-	        },
-	        tooltips:{
-	            callbacks:{
-	                label: (tooltipItem, chart) =>{
-	                    let datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-	                    return datasetLabel+ ': ' + tooltipItem.yLabel + ' MB';
-	                }
-	            }
-	        }
-  		}
-  	});
-  	this.x = setInterval(() => { this.getHola2(); }, 1000);
+    //LineChart
+    this.getHola();
+    this.LineChart = new Chart('lineChart', {
+      type: 'line',
+      data: {
+        labels: this.listlabels,
+        datasets: [{
+          label:  'Monitor-CPU',
+          data: this.listdatos,
+          fill: false,
+          lineTension:  0.5,
+          borderColor:  "red",
+          borderWidth:  1
+        }]
+      },
+      options: {
+        title: {
+          text: "Porcentaje consumo de procesador",
+          display: true
+        },
+        scales: {
+              xAxes: [{
+                  time: {
+                      unit: 'second'
+                  },
+                  gridLines: {
+                      display:true,
+                      drawBorder: false
+                  },
+                  ticks: {
+                      maxTicksLimit: 20
+                  }
+              }],
+              yAxes:[{
+                  ticks:{
+                      maxTicksLimit: 10,
+                      callback: function(value, index, values){
+                          return value + " MB"
+                      }
+                  }
+              }],
+          },
+          legend : {
+              display: false
+          },
+          tooltips:{
+              callbacks:{
+                  label: (tooltipItem, chart) =>{
+                      let datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                      return datasetLabel+ ': ' + tooltipItem.yLabel + ' MB';
+                  }
+              }
+          }
+      }
+    });
+    this.x = setInterval(() => { this.getHola2(); }, 1000);
   }
 
 }

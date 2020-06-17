@@ -16,6 +16,8 @@ export class MonitorRamComponent implements OnInit {
 
   public listlabels : number[]; 
   public listdatos : number[];
+
+  public titulo : string = "Monitor - RAM"
   
   
 
@@ -81,7 +83,7 @@ delay(ms: number) {
   		},
   		options: {
   			title: {
-  				text: "Line Chart",
+  				text: "RAM Consumida",
   				display: true
   			},
   			scales: {

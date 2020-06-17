@@ -1,9 +1,11 @@
-<h2>Listado de procesos</h2>
 
-<hr>
+<div id="title">
+	<h1>{{titulo}}</h1>
+	<h2>Tabulación total de procesos</h2>
+</div>
 
   <!--<li *ngFor="let p of LProcesos "> <strong> {{ p.processid }} </strong> - {{ p.nombre }}-->
-  	<h3>Tabulación total de procesos</h3>
+<div id="article">
 	<table align = center >
 		<tr>
 			<th>
@@ -79,10 +81,10 @@
 		</tr>
 	</table>
 	<br>
-	Numero total: {{ lptotal }}
+	<h3>Numero total: {{ lptotal }}</h3>
 	<br>
-<hr>
-	<h3>Detalle de procesos</h3>
+
+	<h2>Detalle de procesos</h2>
 
   <!--<li *ngFor="let p of LProcesos "> <strong> {{ p.processid }} </strong> - {{ p.nombre }}-->
   	<table align='center'>
@@ -111,3 +113,5 @@
   			<td> <button (click)="borrarProceso(p.Pid)"> Eliminar </button></td>
   		</tr>
   	</table>
+  	<br>
+</div>
