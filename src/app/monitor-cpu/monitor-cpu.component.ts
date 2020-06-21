@@ -11,39 +11,81 @@ import { ReqprocesosService } from '../services/reqprocesos.services'
 export class MonitorCpuComponent implements OnInit {
   public LineChart: Chart;
   public x : any;
-  public nint : number = -10;
+  public nint : number = -12;
   public valAct : number = 0;
   public titulo : string = "Monitor - CPU";
+  public valant = undefined;
+  public valpor ;
 
   public listlabels : number[]; 
   public listdatos : number[];
-    
+
+  stats()
+  {
+    let act = this.getHola2();
+    if(!this.valant)
+    {
+      this.valant = act;
+      let i = 0 ;
+      while(true){
+        i+=1;
+        if(i === 80000000)
+        {
+          break;
+        }
+      }
+      act = this.getHola2();
+    }
+    var prc = 0;
+    if(typeof act === 'undefined' )
+    {
+      console.log("??????? indefinido ???????")
+      prc = 0;
+    }
+    else
+    {
+      prc = ((act[0] - this.valant[0])/(act[1] - this.valant[1]))*100;
+      console.log(" ++++valant++++ " + this.valant + " ++++act++++ " + act);
+      this.valant = act;
+    }
+    if(isNaN(prc))
+    {
+      prc = 0.0;    
+    }
+    console.log("=======prc============"+prc);
+    this.removeData(this.LineChart);
+    this.addData(this.LineChart, prc);
+  }
 
   getHola(){
-  this.listlabels = [this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1];
-  this.listdatos = [0,0,0,0,0,0,0,0,0,0];
-  console.log(" =====+> Eliminando: " + this.listlabels  );
+    this.listlabels = [this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1, this.nint+=1];
+    this.listdatos = [0,0,0,0,0,0,0,0,0,0];
+    console.log(" =====+> Eliminando: " + this.listlabels  );
   }
 
   getHola2(){
   console.log("esperando2");
+  var cpu ;
+  var total ;
+  
   this._reqprocesosService.getCpu().subscribe(
         result => {
         this.valAct = result.User;
-          console.log(this.valAct);
+          cpu = result.User + result.Nice + result.System + result.Irq + result.Softirq + result.Steal;
+          total = result.User + result.Nice + result.System + result.Idle + result.Iowait + result.Irq + result.Softirq + result.Steal;
+          this.valpor = [cpu, total];
         },
         error => {
           console.log("======error====="+<any>error);
         }
     );
-  this.removeData(this.LineChart);
-  this.addData(this.LineChart,this.valAct);
+    return this.valpor;
   }
 
 addData(chart, data) {
     chart.data.labels.push(this.nint+=1);
     chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data/100000);
+        dataset.data.push(data);
     });
     chart.update();
 }
@@ -101,7 +143,7 @@ delay(ms: number) {
                   ticks:{
                       maxTicksLimit: 10,
                       callback: function(value, index, values){
-                          return value + " MB"
+                          return value + " %"
                       }
                   }
               }],
@@ -113,13 +155,13 @@ delay(ms: number) {
               callbacks:{
                   label: (tooltipItem, chart) =>{
                       let datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                      return datasetLabel+ ': ' + tooltipItem.yLabel + ' MB';
+                      return datasetLabel+ ': ' + tooltipItem.yLabel + ' %';
                   }
               }
           }
       }
     });
-    this.x = setInterval(() => { this.getHola2(); }, 1000);
+    this.x = setInterval(() => { this.stats(); }, 1000);
   }
 
 }
