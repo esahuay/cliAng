@@ -11,8 +11,8 @@ export class HomeComponent implements OnInit {
 	public subtitulo: string;
 
   constructor() { 
-  	this.titulo = "Proyecto 1 - Monitor";
-  	this.subtitulo = " Eliseo Sahuay - Tereza Salazar ";
+  	this.titulo = "Practica #1 - Monitor";
+  	this.subtitulo = " Eliseo Sahuay - Tereza Salazar - Pedro García";
   }
 
   ngOnInit() {

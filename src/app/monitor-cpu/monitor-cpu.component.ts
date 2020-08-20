@@ -16,6 +16,7 @@ export class MonitorCpuComponent implements OnInit {
   public titulo : string = "Monitor - CPU";
   public valant = undefined;
   public valpor ;
+  public valactualReturn;
 
   public listlabels : number[]; 
   public listdatos : number[];
@@ -53,6 +54,7 @@ export class MonitorCpuComponent implements OnInit {
       prc = 0.0;    
     }
     console.log("=======prc============"+prc);
+    this.valactualReturn = prc.toFixed(2);
     this.removeData(this.LineChart);
     this.addData(this.LineChart, prc);
   }

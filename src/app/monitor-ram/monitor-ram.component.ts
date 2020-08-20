@@ -14,6 +14,10 @@ export class MonitorRamComponent implements OnInit {
   public nint : number = -10;
   public valAct : number = 0;
 
+  public porcentajetotal ;
+  public memtotal;
+  public memusada;
+
   public listlabels : number[]; 
   public listdatos : number[];
 
@@ -32,7 +36,12 @@ export class MonitorRamComponent implements OnInit {
 	this._reqprocesosService.getMemo().subscribe(
         result => {
   		  this.valAct = result["Porcentaje memoria"];
-          console.log(this.valAct);
+          console.log(" ------------------------------- ******************* ----------------------"+this.valAct);
+        this.porcentajetotal = this.valAct;
+        this.memtotal = result["Memoria total"]/1000000;
+        this.memtotal = this.memtotal.toFixed(2);
+        this.memusada = result["Memoria libre"]/1000000;
+        this.memusada = this.memusada.toFixed(2);
         },
         error => {
           console.log("======error====="+<any>error);
